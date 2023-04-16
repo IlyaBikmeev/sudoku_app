@@ -1,14 +1,15 @@
-package org.example;
+package org.example.sudoku;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Sudoku {
-    private final char[][] board;
-    private final boolean[][] possible;
+public class Sudoku implements Cloneable {
+    private char[][] board;
+    private boolean[][] possible;
 
 
     public Sudoku() {
@@ -51,6 +52,19 @@ public class Sudoku {
             }
         }
         return cnt;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Sudoku copy = (Sudoku) super.clone();
+        copy.board = new char[9][];
+        copy.possible = new boolean[9][];
+
+        for(int i = 0; i < 9; ++i) {
+            copy.board[i] = Arrays.copyOf(this.board[i], 9);
+            copy.possible[i] = Arrays.copyOf(this.possible[i], 9);
+        }
+        return copy;
     }
 
     public void clear() {
