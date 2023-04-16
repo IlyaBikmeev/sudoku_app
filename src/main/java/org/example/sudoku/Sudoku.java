@@ -17,6 +17,17 @@ public class Sudoku implements Cloneable {
         this.possible = new boolean[9][9];
     }
 
+    public Sudoku(char[][] board) {
+        this.board = new char[9][];
+        this.possible = new boolean[9][9];
+        for(int i = 0; i < 9; ++i) {
+            this.board[i] = Arrays.copyOf(board[i], 9);
+            for(int j = 0; j < 9; ++j) {
+                this.possible[i][j] = this.board[i][j] == '*';
+            }
+        }
+    }
+
     public Sudoku(Reader reader) throws IOException {
         this.board = new char[9][9];
         this.possible = new boolean[9][9];
@@ -31,6 +42,8 @@ public class Sudoku implements Cloneable {
             }
         }
     }
+
+
 
     private boolean outOfBounds(int row, int column) {
         return row < 0 || column < 0 || row >= 9 || column >= 9;
@@ -146,7 +159,7 @@ public class Sudoku implements Cloneable {
     public void print() {
         for(int i = 0; i < 9; ++i) {
             for(int j = 0; j < 9; ++j) {
-                System.out.print(board[i][j]);
+                System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }

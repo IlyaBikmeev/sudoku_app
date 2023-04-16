@@ -10,15 +10,9 @@ import java.io.Reader;
 
 public class SudokuGame {
     public static void main(String[] args) throws Exception {
-//        try(Reader reader = new FileReader("sudoku.txt")) {
-//            Sudoku sudoku = new Sudoku(reader);
-//            SudokuSolver solver = new SudokuSolver(sudoku);
-//            Sudoku solution = solver.getSolution();
-//            solution.print();
-//
-//        } catch(IOException | CloneNotSupportedException ex) {
-//            ex.printStackTrace();
-//        }
-        new SudokuGenerator();
+        SudokuGenerator generator = new SudokuGenerator();
+        Sudoku sudoku = generator.generate();
+        sudoku.print();
+        System.out.println(sudoku.isCorrect());
     }
 }
