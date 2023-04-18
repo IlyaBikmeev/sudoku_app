@@ -1,19 +1,31 @@
-package org.example;
+package org.example.sudoku;
 
 import java.io.IOException;
 import java.io.Reader;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-public class Sudoku {
-    private final char[][] board;
-    private final boolean[][] possible;
+public class Sudoku implements Cloneable {
+    private char[][] board;
+    private boolean[][] possible;
 
 
     public Sudoku() {
         this.board = new char[9][9];
         this.possible = new boolean[9][9];
+    }
+
+    public Sudoku(char[][] board) {
+        this.board = new char[9][];
+        this.possible = new boolean[9][9];
+        for(int i = 0; i < 9; ++i) {
+            this.board[i] = Arrays.copyOf(board[i], 9);
+            for(int j = 0; j < 9; ++j) {
+                this.possible[i][j] = this.board[i][j] == '*';
+            }
+        }
     }
 
     public Sudoku(Reader reader) throws IOException {
@@ -30,6 +42,8 @@ public class Sudoku {
             }
         }
     }
+
+
 
     private boolean outOfBounds(int row, int column) {
         return row < 0 || column < 0 || row >= 9 || column >= 9;
@@ -51,6 +65,19 @@ public class Sudoku {
             }
         }
         return cnt;
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        Sudoku copy = (Sudoku) super.clone();
+        copy.board = new char[9][];
+        copy.possible = new boolean[9][];
+
+        for(int i = 0; i < 9; ++i) {
+            copy.board[i] = Arrays.copyOf(this.board[i], 9);
+            copy.possible[i] = Arrays.copyOf(this.possible[i], 9);
+        }
+        return copy;
     }
 
     public void clear() {
@@ -132,7 +159,7 @@ public class Sudoku {
     public void print() {
         for(int i = 0; i < 9; ++i) {
             for(int j = 0; j < 9; ++j) {
-                System.out.print(board[i][j]);
+                System.out.print(board[i][j] + " ");
             }
             System.out.println();
         }
