@@ -6,6 +6,7 @@ import org.example.sudoku.solver.SudokuSolver;
 
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.Reader;
 
 public class SudokuGame {
@@ -13,6 +14,8 @@ public class SudokuGame {
         SudokuGenerator generator = new SudokuGenerator();
         Sudoku sudoku = generator.generate();
         sudoku.print();
-        System.out.println(sudoku.isCorrect());
+        System.out.println();
+        Sudoku solution = new SudokuSolver(sudoku).getSolution();
+        solution.print();
     }
 }

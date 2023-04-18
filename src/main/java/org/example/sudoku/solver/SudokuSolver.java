@@ -12,8 +12,6 @@ public class SudokuSolver {
     private List<Sudoku> allSolutions;
     private boolean solved;
 
-    private static int ITERATIONS = 0;
-
     public SudokuSolver(Sudoku sudoku) throws CloneNotSupportedException {
         this.sudoku = sudoku;
         this.solution = (Sudoku) sudoku.clone();
@@ -25,11 +23,9 @@ public class SudokuSolver {
     }
 
     private void solve(int orderNum) throws CloneNotSupportedException {
-        ++ITERATIONS;
         int row = orderNum / 9;
         int col = orderNum % 9;
         if(orderNum == 81) {
-            System.out.println("ITERATIONS: " + ITERATIONS);
             allSolutions.add((Sudoku) solution.clone());
             return;
         }

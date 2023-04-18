@@ -1,6 +1,7 @@
 package org.example.sudoku.generator;
 
 import org.example.sudoku.Sudoku;
+import org.example.sudoku.solver.SudokuSolver;
 
 import java.util.Random;
 
@@ -22,8 +23,24 @@ public class SudokuGenerator {
         }
     }
 
-    public Sudoku generate() {
+    public Sudoku generate() throws Exception {
         iterations(1000);
+
+        int cnt = 0;
+
+        while(cnt < 50) {
+            int row = random.nextInt(9);
+            int col = random.nextInt(9);
+            char val = base[row][col];
+            base[row][col] = '*';
+            if(new SudokuSolver(new Sudoku(base)).solutionsNumber() == 1) {
+                ++cnt;
+            }
+            else {
+                base[row][col] = val;
+            }
+        }
+
         return new Sudoku(base);
     }
 
@@ -109,5 +126,4 @@ public class SudokuGenerator {
             }
         }
     }
-
 }
